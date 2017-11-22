@@ -1,5 +1,5 @@
 
-def divf(x,g):
+def divf2(x,g):
     """
         x: list[int]
         g: list[int]
@@ -21,4 +21,37 @@ def divf(x,g):
         xx.sort(reverse=True)
     return q, xx    
 
-print(divf([8,4,3,2,0], [4,3,2,1,0]))
+
+def addf2(a, b):
+    a.sort(reverse=True)
+    b.sort(reverse=True)
+    re = a + []
+    for i in b:
+        try:
+            index = re.index(i)
+            del re[index]
+        except:
+            re.append(i)
+    re.sort(reverse=True)
+    return re
+
+def multif2(a,b):
+    a.sort(reverse=True)
+    b.sort(reverse=True)
+    re = []
+    for i in a:
+        for j in b:
+            try:
+                index = re.index(i+j)
+                del re[index]
+            except:
+                re.append(i+j)
+    re.sort(reverse=True)
+    
+
+def quick_mod_f(b, f):  #快速模运算 x^b mod(f(x))
+    pass
+
+
+
+print(
