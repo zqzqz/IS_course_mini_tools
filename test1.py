@@ -1,5 +1,4 @@
-import numpy
-from polynomial import *
+from polynomial_util import *
 
 def test():
     modf = [1,1,0,0,0,0,1]
@@ -8,40 +7,6 @@ def test():
     glist = [g.powerf(9), g.powerf(9*2), g.powerf(9*4)]
     for each in glist:
         print(each.f2s())
-
-def base(modf, p):
-    """
-        modf: list[int]
-        p: int
-        return: list[m_Polynomial]
-    """
-    test_list = []
-    #build test set
-    for i in range(p**(len(modf)-1)):
-        num = i
-        tmp = []
-        while num>0:
-            tmp.append(num%p)
-            num = num//p
-        test_list.append(tmp)
-    # find a answer by cycling
-    b = m_Polynomial([1],modf,p)
-    for each in test_list:
-        b = m_Polynomial(each, modf, p)
-        blist = []
-        for i in range(6):
-            blist.append(b.powerf(p**i))
-        table = []
-        for each in blist:
-            table.append(each.data() + [0 for i in range(len(modf)-1-len(each.data()))])
-        if numpy.linalg.matrix_rank(table) == len(modf)-1:
-            break
-    # calculate base vector
-    result = [b]
-    for power in range(len(modf)-2):
-        b = b.powerf(p)
-        result.append(b)
-    return result
 
 
 def basic_test():
@@ -71,10 +36,34 @@ def basic_test():
 
 
 if __name__ == '__main__':
-    bases = base([1,1,0,0,0,0,1], 2)
-    print("64元域正规基们")
-    for i in bases:
-        print(i.f2s())
+    modf = [1,1,0,0,0,0,1]
+    g = m_Polynomial([0,1],modf,2)
+    print(is_g(g))
+    glist = [g.powerf(9), g.powerf(9*2), g.powerf(9*4)]
+    for each in glist:
+        print(each.f2s())
+    print("index:")
+    print("1")
+    print((glist[0]+glist[1]+glist[2]).f2s())
+    print((glist[0]*glist[1]+glist[0]*glist[2]+glist[1]*glist[2]).f2s())
+    print((glist[0]*glist[1]*glist[2]).f2s())
     print()
-    print("8元子域生成元们")
-    test()
+    print("bases")
+    blist = base(modf, 2)
+    for each in blist:
+        print(each.f2s())
+    print()
+    gg = g.powerf(9)
+    print('0')
+    for i in range(1,8):
+        print(gg.powerf(i).f2s())
+    print()
+    for i in range(8):
+        g = m_Polynomial([],modf,2)
+        if i%2:
+            g = g + glist[0]
+        if (i>>1)%2:
+            g = g + glist[1]
+        if (i>>2)%2:
+            g = g + glist[2]
+        print(g.f2s())

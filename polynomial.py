@@ -157,37 +157,4 @@ class m_Polynomial(object):
             index += 1;
         return m_Polynomial(result.data, self.modf.data, self.mod)
 
-def base(modf, p):
-    """
-        modf: list[int]
-        p: int
-        return: list[m_Polynomial]
-    """
-    test_list = []
-    #build test set
-    for i in range(p**(len(modf)-1)):
-        num = i
-        tmp = []
-        while num>0:
-            tmp.append(num%p)
-            num = num//p
-        test_list.append(tmp)
-    # find a answer by cycling
-    b = m_Polynomial([1],modf,p)
-    for each in test_list:
-        b = m_Polynomial(each, modf, p)
-        blist = []
-        for i in range(6):
-            blist.append(b.powerf(p**i))
-        table = []
-        for each in blist:
-            table.append(each.data() + [0 for i in range(len(modf)-1-len(each.data()))])
-        if numpy.linalg.matrix_rank(table) == len(modf)-1:
-            break
-    # calculate base vector
-    result = [b]
-    for power in range(len(modf)-2):
-        b = b.powerf(p)
-        result.append(b)
-    return result
 
