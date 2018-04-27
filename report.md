@@ -21,6 +21,16 @@ I edited its dependency locally:
 * tokio from 0.* to 0.1.*
 * tls-api from 0.* to 0.1
 
+Use
+```
+grpc = { path= "/root/.cargo/registry/src/mirrors.ustc.edu.cn-b63e9dae659fc205/grpc-0.2.1", version = "0.2.1" }
+```
+to replace
+```
+grpc = "0.2.1"
+```
+Note: mirrors.ustc.edu.cn is a customized rust registry. Default one is partly blocked by Chinese Great Firewall.
+
 ## Obtaining contract MRENCLAVE
 ### status
 cargo make is done
@@ -50,7 +60,7 @@ cd contracts/key-manager/ && cargo make
 usage: cargo fmt [options]
 ```
 Actually Makefile.toml has extends="../Makefile.toml" but there is no Makefile.toml in "contract" directory.  
-I use compiled enclaves from earlier version ekiden and pass this procedure. Simply copy them into directory target/enclaves
+I use compiled enclaves from earlier version ekiden and pass this procedure. Simply copy them into directory target/enclave
 
 ### read token.signed.so
 run
